@@ -14,7 +14,10 @@
 
 ## 脚本原理
 
-基于selenium (如果哪天不行了绝对是selenium的chromedriver的锅 这玩意要和你谷歌浏览器版本对应)
+基于selenium (如果哪天不行了绝对是 selenium的  `chromedriver` 的锅 这玩意要和你谷歌浏览器版本对应)
+
+可用的 [chromedriver](https://googlechromelabs.github.io/chrome-for-testing/#stable) 可以从这里下
+
 先通过 *ping* 判断是否有外网连接,如果有则循环 *ping* ,如果没有则进入 *excel_data* 获取账密传递给 *login*
 
 
@@ -23,8 +26,11 @@
 ### 一些歪门
 
 可以通过一些暴力方法获取账密(思路提供 **wifi密码 暴力**) 
+
 学号构成 20xx + 0 + xxxxx + 2位班级+ 2位学号
+
 密码构成 默认后六位
+
 (能帮你的只能到这里了)
 
 ### 技术改进
