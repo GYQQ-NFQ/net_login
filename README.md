@@ -8,6 +8,8 @@
 
 到手需要自己改造一下,否则下了也是白下(需要一点点python基础)
 
+**用wifi请使用wifi后缀版,用网线请使用lan后缀版本 不然会出bug**
+
 ## 使用方法
 
 无脑双击 ***selenium.bat***
@@ -16,9 +18,9 @@
 
 基于selenium (如果哪天不行了绝对是 selenium的  `chromedriver` 的锅 这玩意要和你谷歌浏览器版本对应)
 
-可用的 [chromedriver](https://googlechromelabs.github.io/chrome-for-testing/#stable) 可以从这里下
+可用的 [chromedriver](https://googlechromelabs.github.io/chrome-for-testing/#stable) 
 
-先通过 *ping* 判断是否有外网连接,如果有则循环 *ping* ,如果没有则进入 *excel_data* 获取账密传递给 *login*
+通过request必应网址判断是否有网络,如果没有则进入 *excel_data* 获取账密传递给 *login*
 
 
 ## 进阶玩法
@@ -36,6 +38,8 @@
 ### 技术改进
 
 可以改用 [drissionpage库](https://github.com/g1879/DrissionPage) 不用每次都因为driver匹配不上而运行失败
+
+可以使用request组装请求参数,但是楼主一直登录失败
 
 
 ## 免责声明

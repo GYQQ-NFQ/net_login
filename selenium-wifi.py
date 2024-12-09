@@ -1,6 +1,7 @@
 import random
 import pandas as pd
 from tcping import Ping
+import requests
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -22,7 +23,8 @@ def setup_logging():
 
 def Login(username, userpwd):
     
-    url = "http://10.0.8.88"
+    # wifi版是连252 网线版是连88 这两玩意有冲突我是没想到的
+    url = "http://10.0.10.252"
     # 下面这段更改为你自己的chromedriver路径
     chromedriver_bin = r'C:\Program Files\Google\Chrome\Application\chromedriver.exe'
     
@@ -94,31 +96,27 @@ def excel_data():
     print('******************************')
     return account, password
 
-# ping百度,类似心跳包的存在?
-def ping(ipAddress,request_nums):
-    ping = Ping(ipAddress,443,0.6)
-    ping.ping(request_nums)
-    res = ping.result.table
-    ret = ping.result.raw
-    retlist = list(ret.split('\n'))
-    loss = retlist[2].split(',')[3].split(' ')[1]  # 获取丢包率
-    return loss, res
+def is_connected_to_internet():
+    try:
+        # 尝试访问bing的首页
+        response = requests.get('https://cn.bing.com')
+        # 如果响应状态码为200，表示成功连接到外网
+        if response.status_code == 200:
+            return True
+        else:
+            return False
+    except requests.ConnectionError:
+        # 如果发生了连接错误，表示没有连接到外网
+        return False
 
 def main():
     # 初始化日志
     setup_logging() 
     
-    ipAddress = "157.148.69.80" # 百度ip地址
-    loss = ''
-    res = ''
-
     while True:
-        # 调用pingip方法得到丢包率
-        loss, res = ping(ipAddress, 4)
-        # print(res) # 打印ping结果
-        print("loss计算: ",float(loss.strip('%')) / 100)
-        if float(loss.strip('%')) / 100 <= 0.1:   # 0.9为自定义丢包率阈值，可修改
-            print(res) #失败才打印ping结果
+        if is_connected_to_internet():
+            print("已连接到外网")
+        else:
             print("断连!,重新连接\n")
             logging.error("断连")
             account,password = excel_data()
@@ -126,8 +124,6 @@ def main():
             print('=============')
             print(mes)
             print('=============')
-        else:
-            print("连接正常!")
 
 if __name__ == "__main__":
     main()
